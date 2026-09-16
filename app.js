@@ -357,7 +357,7 @@ function createTruckVisual() {
     if (truckType === 'pallet') {
         // --- MODELADO DEL PALLET DE MADERA 3D DETALLADO ---
         const woodMat = new THREE.MeshPhongMaterial({
-            cÃ¡lido (no amarillo plano)
+            color: 0xc8ad7f, // Tono madera natural cálido (no amarillo plano)
             shininess: 12,
             specular: 0x332211
         });
@@ -822,6 +822,11 @@ function createTruckVisual() {
     }
 
     
+    // Centramos la camioneta en el origen (X,Z) para que aparezca en el centro del canvas
+    const bbox = new THREE.Box3().setFromObject(truckMesh);
+    const cent = bbox.getCenter(new THREE.Vector3());
+    truckMesh.position.x -= cent.x;
+    truckMesh.position.z -= cent.z;
     scene.add(truckMesh);
     
     // Intentar cargar modelo 3D real si no es un pallet
@@ -2428,7 +2433,7 @@ function downloadReport() {
 // =========================================================================
 function loadTruckModel(truckType, targetGroup, dims) {
     if (!THREE.GLTFLoader) {
-        console.warn("GLTFLoader no estÃ¡¡);
+        console.warn("GLTFLoader no está disponible.");
         return;
     }
 
